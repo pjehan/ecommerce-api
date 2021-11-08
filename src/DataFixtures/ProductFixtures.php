@@ -22,6 +22,7 @@ class ProductFixtures extends Fixture implements DependentFixtureInterface
         $hummingbird_shirt->setName('Hummingbird printed t-shirt');
         $hummingbird_shirt->setDescription('Regular fit, round neckline, short sleeves. Made of extra long staple pima cotton.');
         $hummingbird_shirt->setPrice(22.94);
+        $hummingbird_shirt->setQuantity(10);
         $hummingbird_shirt->setCategory($category_clothes);
 
         $hummingbird_shirt_image = new MediaObject();
@@ -34,6 +35,7 @@ class ProductFixtures extends Fixture implements DependentFixtureInterface
         $best_is_yes_to_come_poster->setName('The best is yet to come Framed poster');
         $best_is_yes_to_come_poster->setDescription('Printed on rigid matt paper and smooth surface.');
         $best_is_yes_to_come_poster->setPrice(34.80);
+        $best_is_yes_to_come_poster->setQuantity(0);
         $best_is_yes_to_come_poster->setCategory($category_art);
 
         $best_is_yes_to_come_poster_image = new MediaObject();
@@ -46,6 +48,7 @@ class ProductFixtures extends Fixture implements DependentFixtureInterface
         $adventure_begins_poster->setName('The adventure begins Framed poster');
         $adventure_begins_poster->setDescription('Printed on rigid matt finish and smooth surface.');
         $adventure_begins_poster->setPrice(34.80);
+        $adventure_begins_poster->setQuantity(1);
         $adventure_begins_poster->setCategory($category_art);
 
         $adventure_begins_poster_image = new MediaObject();
@@ -58,6 +61,7 @@ class ProductFixtures extends Fixture implements DependentFixtureInterface
         $today_is_a_good_day_mug->setName('Mug Today is a good day');
         $today_is_a_good_day_mug->setDescription('White Ceramic Mug. 325ml');
         $today_is_a_good_day_mug->setPrice(14.28);
+        $today_is_a_good_day_mug->setQuantity(2);
         $today_is_a_good_day_mug->setCategory($category_art);
 
         $today_is_a_good_day_mug_image = new MediaObject();
