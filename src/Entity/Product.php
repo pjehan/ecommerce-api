@@ -43,6 +43,12 @@ class Product
     private float $price;
 
     /**
+     * @ORM\Column(type="integer")
+     */
+    #[Groups('product:read')]
+    private int $quantity;
+
+    /**
      * @ORM\ManyToOne(targetEntity=MediaObject::class, cascade={"persist"})
      */
     #[ApiProperty(iri: 'https://schema.org/image')]
@@ -55,11 +61,6 @@ class Product
      */
     #[Groups('product:read')]
     private ?Category $category;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $quantity;
 
     public function getId(): ?int
     {
@@ -102,6 +103,18 @@ class Product
         return $this;
     }
 
+    public function getQuantity(): ?int
+    {
+        return $this->quantity;
+    }
+
+    public function setQuantity(int $quantity): self
+    {
+        $this->quantity = $quantity;
+
+        return $this;
+    }
+
     public function getImage(): ?MediaObject
     {
         return $this->image;
@@ -122,18 +135,6 @@ class Product
     public function setCategory(?Category $category): self
     {
         $this->category = $category;
-
-        return $this;
-    }
-
-    public function getQuantity(): ?int
-    {
-        return $this->quantity;
-    }
-
-    public function setQuantity(int $quantity): self
-    {
-        $this->quantity = $quantity;
 
         return $this;
     }
