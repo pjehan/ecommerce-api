@@ -34,7 +34,9 @@
         "vich/uploader-bundle": "^1.18"
     },
     "require-dev": {
+        "cocur/slugify": "^4.1",
         "doctrine/doctrine-fixtures-bundle": "^3.4",
+        "fakerphp/faker": "^1.17",
         "rector/rector": "^0.12.13",
         "symfony/maker-bundle": "^1.34"
     },

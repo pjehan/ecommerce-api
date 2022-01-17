@@ -8,9 +8,13 @@ use App\Entity\Product;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
+use Faker\Factory;
 
 class ProductFixtures extends Fixture implements DependentFixtureInterface
 {
+    public const PREFIX = 'product-';
+    public const NB_ITEMS = 100;
+
     public function load(ObjectManager $manager): void
     {
         /** @var Category $category_clothes */
@@ -30,6 +34,7 @@ class ProductFixtures extends Fixture implements DependentFixtureInterface
         $hummingbird_shirt->setImage($hummingbird_shirt_image);
 
         $manager->persist($hummingbird_shirt);
+        $this->addReference(self::PREFIX . '1', $hummingbird_shirt);
 
         $best_is_yes_to_come_poster = new Product();
         $best_is_yes_to_come_poster->setName('The best is yet to come Framed poster');
@@ -43,6 +48,7 @@ class ProductFixtures extends Fixture implements DependentFixtureInterface
         $best_is_yes_to_come_poster->setImage($best_is_yes_to_come_poster_image);
 
         $manager->persist($best_is_yes_to_come_poster);
+        $this->addReference(self::PREFIX . '2', $best_is_yes_to_come_poster);
 
         $adventure_begins_poster = new Product();
         $adventure_begins_poster->setName('The adventure begins Framed poster');
@@ -56,6 +62,7 @@ class ProductFixtures extends Fixture implements DependentFixtureInterface
         $adventure_begins_poster->setImage($adventure_begins_poster_image);
 
         $manager->persist($adventure_begins_poster);
+        $this->addReference(self::PREFIX . '3', $adventure_begins_poster);
 
         $today_is_a_good_day_mug = new Product();
         $today_is_a_good_day_mug->setName('Mug Today is a good day');
@@ -69,6 +76,24 @@ class ProductFixtures extends Fixture implements DependentFixtureInterface
         $today_is_a_good_day_mug->setImage($today_is_a_good_day_mug_image);
 
         $manager->persist($today_is_a_good_day_mug);
+        $this->addReference(self::PREFIX . '4', $today_is_a_good_day_mug);
+
+        $faker = Factory::create('fr_FR');
+        for ($i = 5; $i <= self::NB_ITEMS; $i++) {
+            $faker->seed($i);
+            $product = new Product();
+            $product->setName($faker->sentence(3, true));
+            $product->setCategory($this->getReference(CategoryFixtures::PREFIX . array_rand(array_flip([
+                CategoryFixtures::ACCESSORIES,
+                CategoryFixtures::ART,
+                CategoryFixtures::CLOTHES,
+            ]))));
+            $product->setPrice($faker->randomFloat(2, 1, 100));
+            $product->setDescription($faker->sentences(3, true));
+            $product->setQuantity($faker->numberBetween(0, 20));
+            $manager->persist($product);
+            $this->addReference(self::PREFIX . $i, $product);
+        }
 
         $manager->flush();
     }

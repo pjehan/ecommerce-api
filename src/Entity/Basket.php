@@ -20,7 +20,7 @@ class Basket
     private string $reference;
 
     #[ORM\Column(type: 'datetime_immutable')]
-    private \DateTime $createdAt;
+    private \DateTimeImmutable $createdAt;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'baskets')]
     #[ORM\JoinColumn(nullable: false)]

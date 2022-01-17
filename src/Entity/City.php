@@ -25,6 +25,15 @@ class City
     #[ORM\OneToMany(mappedBy: 'city', targetEntity: User::class)]
     private Collection $users;
 
+    #[ORM\Column(type: 'integer', nullable: true)]
+    private $population1999;
+
+    #[ORM\Column(type: 'integer', nullable: true)]
+    private $population2010;
+
+    #[ORM\Column(type: 'integer', nullable: true)]
+    private $population2012;
+
     #[Pure]
     public function __construct()
     {
@@ -86,6 +95,42 @@ class City
                 $user->setCity(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPopulation1999(): ?int
+    {
+        return $this->population1999;
+    }
+
+    public function setPopulation1999(?int $population1999): self
+    {
+        $this->population1999 = $population1999;
+
+        return $this;
+    }
+
+    public function getPopulation2010(): ?int
+    {
+        return $this->population2010;
+    }
+
+    public function setPopulation2010(?int $population2010): self
+    {
+        $this->population2010 = $population2010;
+
+        return $this;
+    }
+
+    public function getPopulation2012(): ?int
+    {
+        return $this->population2012;
+    }
+
+    public function setPopulation2012(?int $population2012): self
+    {
+        $this->population2012 = $population2012;
 
         return $this;
     }
