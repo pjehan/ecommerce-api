@@ -5,39 +5,27 @@ namespace App\Entity;
 use App\Repository\BasketProductRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass=BasketProductRepository::class)
- */
+#[ORM\Entity(repositoryClass: BasketProductRepository::class)]
 class BasketProduct
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
-    private $id;
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
+    private int $id;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $quantity;
+    #[ORM\Column(type: 'integer')]
+    private int $quantity;
 
-    /**
-     * @ORM\Column(type="decimal", precision=10, scale=2)
-     */
-    private $price;
+    #[ORM\Column(type: 'decimal', precision: 10, scale: 2)]
+    private float $price;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Product::class, inversedBy="basketProducts")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $product;
+    #[ORM\ManyToOne(targetEntity: Product::class, inversedBy: 'basketProducts')]
+    #[ORM\JoinColumn(nullable: false)]
+    private Product $product;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Basket::class, inversedBy="basketProducts")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $basket;
+    #[ORM\ManyToOne(targetEntity: Basket::class, inversedBy: 'basketProducts')]
+    #[ORM\JoinColumn(nullable: false)]
+    private Basket $basket;
 
     public function getId(): ?int
     {

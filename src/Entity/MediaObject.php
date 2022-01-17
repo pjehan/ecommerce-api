@@ -12,7 +12,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
- * @ORM\Entity
  * @Vich\Uploadable
  */
 #[ApiResource(
@@ -45,13 +44,12 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
     itemOperations: ['get'],
     normalizationContext: ['groups' => ['media_object:read']]
 )]
+#[ORM\Entity]
 class MediaObject
 {
-    /**
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
-     * @ORM\Id
-     */
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue]
+    #[ORM\Id]
     private ?int $id = null;
 
     #[ApiProperty(iri: 'http://schema.org/contentUrl')]
@@ -64,9 +62,7 @@ class MediaObject
     #[Assert\NotNull(groups: ['media_object_create'])]
     public ?File $file = null;
 
-    /**
-     * @ORM\Column(nullable=true)
-     */
+    #[ORM\Column(nullable: true)]
     public ?string $filePath = null;
 
     public function getId(): ?int

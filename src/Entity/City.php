@@ -6,34 +6,26 @@ use App\Repository\CityRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use JetBrains\PhpStorm\Pure;
 
-/**
- * @ORM\Entity(repositoryClass=CityRepository::class)
- */
+#[ORM\Entity(repositoryClass: CityRepository::class)]
 class City
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
-    private $id;
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
+    private int $id;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $name;
+    #[ORM\Column(type: 'string', length: 255)]
+    private string $name;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $zipCode;
+    #[ORM\Column(type: 'string', length: 255)]
+    private string $zipCode;
 
-    /**
-     * @ORM\OneToMany(targetEntity=User::class, mappedBy="city")
-     */
-    private $users;
+    #[ORM\OneToMany(mappedBy: 'city', targetEntity: User::class)]
+    private Collection $users;
 
+    #[Pure]
     public function __construct()
     {
         $this->users = new ArrayCollection();

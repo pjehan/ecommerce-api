@@ -6,46 +6,34 @@ use App\Repository\BasketRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use JetBrains\PhpStorm\Pure;
 
-/**
- * @ORM\Entity(repositoryClass=BasketRepository::class)
- */
+#[ORM\Entity(repositoryClass: BasketRepository::class)]
 class Basket
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
-    private $id;
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
+    private int $id;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $reference;
+    #[ORM\Column(type: 'string', length: 255)]
+    private string $reference;
 
-    /**
-     * @ORM\Column(type="datetime_immutable")
-     */
-    private $createdAt;
+    #[ORM\Column(type: 'datetime_immutable')]
+    private \DateTime $createdAt;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="baskets")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $user;
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'baskets')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $user;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=PaymentMethod::class, inversedBy="baskets")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $paymentMethod;
+    #[ORM\ManyToOne(targetEntity: PaymentMethod::class, inversedBy: 'baskets')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?PaymentMethod $paymentMethod;
 
-    /**
-     * @ORM\OneToMany(targetEntity=BasketProduct::class, mappedBy="basket", orphanRemoval=true)
-     */
-    private $basketProducts;
+    #[ORM\OneToMany(mappedBy: 'basket', targetEntity: BasketProduct::class, orphanRemoval: true)]
+    private Collection $basketProducts;
 
+    #[Pure]
     public function __construct()
     {
         $this->basketProducts = new ArrayCollection();

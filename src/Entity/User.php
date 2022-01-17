@@ -6,73 +6,50 @@ use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use JetBrains\PhpStorm\Pure;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-/**
- * @ORM\Entity(repositoryClass=UserRepository::class)
- */
+#[ORM\Entity(repositoryClass: UserRepository::class)]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
-    private $id;
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
+    private int $id;
 
-    /**
-     * @ORM\Column(type="string", length=180, unique=true)
-     */
-    private $email;
+    #[ORM\Column(type: 'string', length: 180, unique: true)]
+    private string $email;
 
-    /**
-     * @ORM\Column(type="json")
-     */
-    private $roles = [];
+    #[ORM\Column(type: 'json')]
+    private array $roles = [];
 
-    /**
-     * @var string The hashed password
-     * @ORM\Column(type="string")
-     */
-    private $password;
+    #[ORM\Column(type: 'string')]
+    private string $password;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $firstName;
+    #[ORM\Column(type: 'string', length: 255)]
+    private string $firstName;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $lastName;
+    #[ORM\Column(type: 'string', length: 255)]
+    private string $lastName;
 
-    /**
-     * @ORM\Column(type="date", nullable=true)
-     */
-    private $birthDate;
+    #[ORM\Column(type: 'date', nullable: true)]
+    private \DateTime $birthDate;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $address;
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private string $address;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Gender::class, inversedBy="users")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $gender;
+    #[ORM\ManyToOne(targetEntity: Gender::class, inversedBy: 'users')]
+    #[ORM\JoinColumn(nullable: false)]
+    private Gender $gender;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=City::class, inversedBy="users")
-     */
-    private $city;
+    #[ORM\ManyToOne(targetEntity: City::class, inversedBy: 'users')]
+    private ?City $city;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Basket::class, mappedBy="user", orphanRemoval=true)
-     */
-    private $baskets;
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Basket::class, orphanRemoval: true)]
+    private Collection $baskets;
 
+    #[Pure]
     public function __construct()
     {
         $this->baskets = new ArrayCollection();
@@ -102,7 +79,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getUserIdentifier(): string
     {
-        return (string) $this->email;
+        return (string)$this->email;
     }
 
     /**
@@ -110,7 +87,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getUsername(): string
     {
-        return (string) $this->email;
+        return (string)$this->email;
     }
 
     /**

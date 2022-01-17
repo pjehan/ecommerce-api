@@ -7,36 +7,30 @@ use App\Repository\CategoryRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use JetBrains\PhpStorm\Pure;
 use Symfony\Component\Serializer\Annotation\Groups;
 
-/**
- * @ORM\Entity(repositoryClass=CategoryRepository::class)
- */
 #[ApiResource(
     normalizationContext: ['groups' => ['category:read']]
 )]
+#[ORM\Entity(repositoryClass: CategoryRepository::class)]
 class Category
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
     #[Groups('category:read')]
-    private ?int $id;
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
+    private ?int $id = null;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
     #[Groups(['category:read', 'product:read'])]
+    #[ORM\Column(type: 'string', length: 255)]
     private string $name;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Product::class, mappedBy="category")
-     */
     #[Groups('category:read')]
-    private $products;
+    #[ORM\OneToMany(mappedBy: 'category', targetEntity: Product::class)]
+    private Collection $products;
 
+    #[Pure]
     public function __construct()
     {
         $this->products = new ArrayCollection();

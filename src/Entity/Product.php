@@ -8,67 +8,51 @@ use App\Repository\ProductRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use JetBrains\PhpStorm\Pure;
 use Symfony\Component\Serializer\Annotation\Groups;
 
-/**
- * @ORM\Entity(repositoryClass=ProductRepository::class)
- */
 #[ApiResource(
     normalizationContext: ['groups' => ['product:read']]
 )]
+#[ORM\Entity(repositoryClass: ProductRepository::class)]
 class Product
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
     #[Groups('product:read')]
-    private ?int $id;
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
+    private ?int $id = null;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
     #[Groups(['product:read', 'category:read'])]
+    #[ORM\Column(type: 'string', length: 255)]
     private string $name;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
     #[Groups('product:read')]
-    private ?string $description;
+    #[ORM\Column(type: 'text', nullable: true)]
+    private ?string $description = null;
 
-    /**
-     * @ORM\Column(type="decimal", precision=10, scale=2)
-     */
     #[Groups(['product:read', 'category:read'])]
+    #[ORM\Column(type: 'decimal', precision: 10, scale: 2)]
     private float $price;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
     #[Groups('product:read')]
+    #[ORM\Column(type: 'integer')]
     private int $quantity;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=MediaObject::class, cascade={"persist"})
-     */
     #[ApiProperty(iri: 'https://schema.org/image')]
     #[Groups(['product:read', 'category:read'])]
+    #[ORM\ManyToOne(targetEntity: MediaObject::class, cascade: ['persist'])]
     private ?MediaObject $image = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="products")
-     * @ORM\JoinColumn(nullable=false)
-     */
     #[Groups('product:read')]
-    private ?Category $category;
+    #[ORM\ManyToOne(targetEntity: Category::class, inversedBy: 'products')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Category $category = null;
 
-    /**
-     * @ORM\OneToMany(targetEntity=BasketProduct::class, mappedBy="product", orphanRemoval=true)
-     */
-    private $basketProducts;
+    #[ORM\OneToMany(mappedBy: 'product', targetEntity: BasketProduct::class, orphanRemoval: true)]
+    private Collection $basketProducts;
 
+    #[Pure]
     public function __construct()
     {
         $this->basketProducts = new ArrayCollection();

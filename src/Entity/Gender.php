@@ -6,29 +6,23 @@ use App\Repository\GenderRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use JetBrains\PhpStorm\Pure;
 
-/**
- * @ORM\Entity(repositoryClass=GenderRepository::class)
- */
+#[ORM\Entity(repositoryClass: GenderRepository::class)]
 class Gender
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
-    private $id;
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
+    private int $id;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $name;
+    #[ORM\Column(type: 'string', length: 255)]
+    private string $name;
 
-    /**
-     * @ORM\OneToMany(targetEntity=User::class, mappedBy="gender")
-     */
-    private $users;
+    #[ORM\OneToMany(mappedBy: 'gender', targetEntity: User::class)]
+    private Collection $users;
 
+    #[Pure]
     public function __construct()
     {
         $this->users = new ArrayCollection();
