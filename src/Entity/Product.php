@@ -5,6 +5,8 @@ namespace App\Entity;
 use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\ProductRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
@@ -61,6 +63,16 @@ class Product
      */
     #[Groups('product:read')]
     private ?Category $category;
+
+    /**
+     * @ORM\OneToMany(targetEntity=BasketProduct::class, mappedBy="product", orphanRemoval=true)
+     */
+    private $basketProducts;
+
+    public function __construct()
+    {
+        $this->basketProducts = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -135,6 +147,36 @@ class Product
     public function setCategory(?Category $category): self
     {
         $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|BasketProduct[]
+     */
+    public function getBasketProducts(): Collection
+    {
+        return $this->basketProducts;
+    }
+
+    public function addBasketProduct(BasketProduct $basketProduct): self
+    {
+        if (!$this->basketProducts->contains($basketProduct)) {
+            $this->basketProducts[] = $basketProduct;
+            $basketProduct->setProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBasketProduct(BasketProduct $basketProduct): self
+    {
+        if ($this->basketProducts->removeElement($basketProduct)) {
+            // set the owning side to null (unless already changed)
+            if ($basketProduct->getProduct() === $this) {
+                $basketProduct->setProduct(null);
+            }
+        }
 
         return $this;
     }
