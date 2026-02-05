@@ -3,6 +3,7 @@
 namespace App\DataFixtures;
 
 use App\Entity\City;
+use App\Entity\Gender;
 use App\Entity\User;
 use Cocur\Slugify\Slugify;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -14,7 +15,7 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 class UserFixtures extends Fixture implements DependentFixtureInterface
 {
     public const PREFIX = 'user-';
-    public const NB_ITEMS = 1000;
+    public const NB_ITEMS = 100;
 
     public function __construct(private UserPasswordHasherInterface $hasher)
     {
@@ -29,7 +30,8 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
             $faker->seed($i);
             $user = new User();
             $male = $faker->boolean();
-            $user->setGender($this->getReference(GenderFixtures::PREFIX . ($male ? GenderFixtures::MALE : GenderFixtures::FEMALE)));
+            $gender = GenderFixtures::PREFIX . ($male ? GenderFixtures::MALE : GenderFixtures::FEMALE);
+            $user->setGender($this->getReference($gender, Gender::class));
             $user->setFirstName($male ? $faker->firstNameMale() : $faker->firstNameFemale());
             $user->setLastName($faker->lastName());
             $user->setEmail(preg_replace('/([\w.]+)@(\w+)/', $slugify->slugify($user->getFirstName()) . '.' . $slugify->slugify($user->getLastName()) . '@$2', $faker->email()));
@@ -41,7 +43,7 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
                 // Loop to help big cities have more population
                 do {
                     /** @var City $city */
-                    $city = $this->getReference(CityFixtures::PREFIX . $faker->numberBetween(0, 36700));
+                    $city = $this->getReference(CityFixtures::PREFIX . $faker->numberBetween(0, 36700), City::class);
                 } while($city->getPopulation2012() < $faker->numberBetween(0, 1000));
                 $user->setCity($city);
             }

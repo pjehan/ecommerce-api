@@ -13,10 +13,10 @@ class Gender
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column(type: 'integer')]
+    #[ORM\Column]
     private int $id;
 
-    #[ORM\Column(type: 'string', length: 255)]
+    #[ORM\Column(length: 255)]
     private string $name;
 
     #[ORM\OneToMany(mappedBy: 'gender', targetEntity: User::class)]

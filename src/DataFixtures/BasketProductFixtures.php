@@ -2,7 +2,9 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Basket;
 use App\Entity\BasketProduct;
+use App\Entity\Product;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
@@ -19,8 +21,8 @@ class BasketProductFixtures extends Fixture implements DependentFixtureInterface
         for ($i = 1; $i <= self::NB_ITEMS; $i++) {
             $faker->seed($i);
             $basketProduct = new BasketProduct();
-            $basketProduct->setProduct($this->getReference(ProductFixtures::PREFIX . $faker->numberBetween(1, ProductFixtures::NB_ITEMS)));
-            $basketProduct->setBasket($this->getReference(BasketFixtures::PREFIX . $faker->numberBetween(1, BasketFixtures::NB_ITEMS)));
+            $basketProduct->setProduct($this->getReference(ProductFixtures::PREFIX . $faker->numberBetween(1, ProductFixtures::NB_ITEMS), Product::class));
+            $basketProduct->setBasket($this->getReference(BasketFixtures::PREFIX . $faker->numberBetween(1, BasketFixtures::NB_ITEMS), Basket::class));
             $basketProduct->setPrice($faker->randomFloat(2, 1, 100));
             $basketProduct->setQuantity($faker->numberBetween(1, 10));
             $manager->persist($basketProduct);

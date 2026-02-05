@@ -13,13 +13,13 @@ class Basket
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column(type: 'integer')]
+    #[ORM\Column]
     private int $id;
 
-    #[ORM\Column(type: 'string', length: 255)]
+    #[ORM\Column(length: 255)]
     private string $reference;
 
-    #[ORM\Column(type: 'datetime_immutable')]
+    #[ORM\Column]
     private \DateTimeImmutable $createdAt;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'baskets')]
@@ -30,7 +30,7 @@ class Basket
     #[ORM\JoinColumn(nullable: false)]
     private ?PaymentMethod $paymentMethod;
 
-    #[ORM\OneToMany(mappedBy: 'basket', targetEntity: BasketProduct::class, orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: BasketProduct::class, mappedBy: 'basket', orphanRemoval: true)]
     private Collection $basketProducts;
 
     #[Pure]

@@ -13,26 +13,26 @@ class City
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column(type: 'integer')]
+    #[ORM\Column]
     private int $id;
 
-    #[ORM\Column(type: 'string', length: 255)]
+    #[ORM\Column(length: 255)]
     private string $name;
 
-    #[ORM\Column(type: 'string', length: 255)]
+    #[ORM\Column(length: 255)]
     private string $zipCode;
 
     #[ORM\OneToMany(mappedBy: 'city', targetEntity: User::class)]
     private Collection $users;
 
-    #[ORM\Column(type: 'integer', nullable: true)]
-    private $population1999;
+    #[ORM\Column(nullable: true)]
+    private ?int $population1999 = null;
 
-    #[ORM\Column(type: 'integer', nullable: true)]
-    private $population2010;
+    #[ORM\Column(nullable: true)]
+    private ?int $population2010 = null;
 
-    #[ORM\Column(type: 'integer', nullable: true)]
-    private $population2012;
+    #[ORM\Column(nullable: true)]
+    private ?int $population2012 = null;
 
     #[Pure]
     public function __construct()

@@ -3,6 +3,8 @@
 namespace App\DataFixtures;
 
 use App\Entity\Basket;
+use App\Entity\PaymentMethod;
+use App\Entity\User;
 use DateTimeImmutable;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
@@ -21,12 +23,12 @@ class BasketFixtures extends Fixture implements DependentFixtureInterface
             $faker->seed($i);
             $basket = new Basket();
             $basket->setReference($faker->isbn10());
-            $basket->setUser($this->getReference(UserFixtures::PREFIX . $faker->numberBetween(1, UserFixtures::NB_ITEMS)));
+            $basket->setUser($this->getReference(UserFixtures::PREFIX . $faker->numberBetween(1, UserFixtures::NB_ITEMS), User::class));
             $basket->setPaymentMethod($this->getReference(PaymentMethodFixtures::PREFIX . array_rand(array_flip([
                 PaymentMethodFixtures::CREDIT_CARD,
                 PaymentMethodFixtures::CHECK,
                 PaymentMethodFixtures::PAYPAL,
-            ]))));
+            ])), PaymentMethod::class));
             $basket->setCreatedAt(DateTimeImmutable::createFromMutable($faker->dateTimeThisDecade()));
             $manager->persist($basket);
             $this->addReference(self::PREFIX . $i, $basket);

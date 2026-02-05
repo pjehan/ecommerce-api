@@ -18,9 +18,9 @@ class ProductFixtures extends Fixture implements DependentFixtureInterface
     public function load(ObjectManager $manager): void
     {
         /** @var Category $category_clothes */
-        $category_clothes = $this->getReference(CategoryFixtures::PREFIX . CategoryFixtures::CLOTHES);
+        $category_clothes = $this->getReference(CategoryFixtures::PREFIX . CategoryFixtures::CLOTHES, Category::class);
         /** @var Category $category_art */
-        $category_art = $this->getReference(CategoryFixtures::PREFIX . CategoryFixtures::ART);
+        $category_art = $this->getReference(CategoryFixtures::PREFIX . CategoryFixtures::ART, Category::class);
 
         $hummingbird_shirt = new Product();
         $hummingbird_shirt->setName('Hummingbird printed t-shirt');
@@ -87,7 +87,7 @@ class ProductFixtures extends Fixture implements DependentFixtureInterface
                 CategoryFixtures::ACCESSORIES,
                 CategoryFixtures::ART,
                 CategoryFixtures::CLOTHES,
-            ]))));
+            ])), Category::class));
             $product->setPrice($faker->randomFloat(2, 1, 100));
             $product->setDescription($faker->sentences(3, true));
             $product->setQuantity($faker->numberBetween(0, 20));

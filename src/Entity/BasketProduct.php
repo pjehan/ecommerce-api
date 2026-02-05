@@ -10,14 +10,14 @@ class BasketProduct
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column(type: 'integer')]
+    #[ORM\Column]
     private int $id;
 
-    #[ORM\Column(type: 'integer')]
+    #[ORM\Column]
     private int $quantity;
 
     #[ORM\Column(type: 'decimal', precision: 10, scale: 2)]
-    private float $price;
+    private string $price;
 
     #[ORM\ManyToOne(targetEntity: Product::class, inversedBy: 'basketProducts')]
     #[ORM\JoinColumn(nullable: false)]

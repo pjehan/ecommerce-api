@@ -1,27 +1,22 @@
-version: '3'
-
 services:
-###> doctrine/doctrine-bundle ###
-  database:
-    image: mysql:5.7
-    command: --default-authentication-plugin=mysql_native_password
-    restart: always
+  db:
+    image: mysql:8.4
+    restart: on-failure
     environment:
-      MYSQL_ROOT_USER: root
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_USER: api
-      MYSQL_PASSWORD: api
-      MYSQL_DATABASE: ecommerce_api
+      MYSQL_DATABASE: 'spacehub'
+      MYSQL_USER: 'spacehub'
+      MYSQL_PASSWORD: 'spacehub'
+      MYSQL_ROOT_PASSWORD: 'root'
     ports:
-      - "3306:3306"
-###< doctrine/doctrine-bundle ###
+      - '3306:3306'
+    expose:
+      - '3306'
+    volumes:
+      - mysql-data:/var/lib/mysql
   adminer:
     image: adminer
-    restart: always
+    restart: on-failure
     ports:
-      - "8080:8080"
-
+      - '8080:8080'
 volumes:
-###> doctrine/doctrine-bundle ###
-  db-data:
-###< doctrine/doctrine-bundle ###
+  mysql-data:

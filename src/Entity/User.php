@@ -15,29 +15,29 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column(type: 'integer')]
+    #[ORM\Column]
     private int $id;
 
-    #[ORM\Column(type: 'string', length: 180, unique: true)]
+    #[ORM\Column(length: 180, unique: true)]
     private string $email;
 
-    #[ORM\Column(type: 'json')]
+    #[ORM\Column]
     private array $roles = [];
 
-    #[ORM\Column(type: 'string')]
+    #[ORM\Column]
     private string $password;
 
-    #[ORM\Column(type: 'string', length: 255)]
+    #[ORM\Column(length: 255)]
     private string $firstName;
 
-    #[ORM\Column(type: 'string', length: 255)]
+    #[ORM\Column(length: 255)]
     private string $lastName;
 
     #[ORM\Column(type: 'date', nullable: true)]
-    private \DateTime $birthDate;
+    private ?\DateTimeInterface $birthDate = null;
 
-    #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private string $address;
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $address = null;
 
     #[ORM\ManyToOne(targetEntity: Gender::class, inversedBy: 'users')]
     #[ORM\JoinColumn(nullable: false)]
@@ -78,14 +78,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @see UserInterface
      */
     public function getUserIdentifier(): string
-    {
-        return (string)$this->email;
-    }
-
-    /**
-     * @deprecated since Symfony 5.3, use getUserIdentifier instead
-     */
-    public function getUsername(): string
     {
         return (string)$this->email;
     }
@@ -138,7 +130,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @see UserInterface
      */
-    public function eraseCredentials()
+    public function eraseCredentials(): void
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;

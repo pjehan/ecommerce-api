@@ -2,8 +2,8 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Core\Annotation\ApiProperty;
-use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Metadata\ApiProperty;
+use ApiPlatform\Metadata\ApiResource;
 use App\Repository\ProductRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -20,11 +20,11 @@ class Product
     #[Groups('product:read')]
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column(type: 'integer')]
+    #[ORM\Column]
     private ?int $id = null;
 
     #[Groups(['product:read', 'category:read'])]
-    #[ORM\Column(type: 'string', length: 255)]
+    #[ORM\Column(length: 255)]
     private string $name;
 
     #[Groups('product:read')]
@@ -33,13 +33,13 @@ class Product
 
     #[Groups(['product:read', 'category:read'])]
     #[ORM\Column(type: 'decimal', precision: 10, scale: 2)]
-    private float $price;
+    private string $price;
 
     #[Groups('product:read')]
-    #[ORM\Column(type: 'integer')]
+    #[ORM\Column]
     private int $quantity;
 
-    #[ApiProperty(iri: 'https://schema.org/image')]
+    #[ApiProperty(types: ['https://schema.org/image'])]
     #[Groups(['product:read', 'category:read'])]
     #[ORM\ManyToOne(targetEntity: MediaObject::class, cascade: ['persist'])]
     private ?MediaObject $image = null;

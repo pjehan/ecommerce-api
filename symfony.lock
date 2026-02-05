@@ -19,26 +19,8 @@
     "composer/package-versions-deprecated": {
         "version": "1.11.99.4"
     },
-    "doctrine/annotations": {
-        "version": "1.13",
-        "recipe": {
-            "repo": "github.com/symfony/recipes",
-            "branch": "master",
-            "version": "1.0",
-            "ref": "a2759dd6123694c8d901d0ec80006e044c2e6457"
-        },
-        "files": [
-            "config/routes/annotations.yaml"
-        ]
-    },
-    "doctrine/cache": {
-        "version": "2.1.1"
-    },
     "doctrine/collections": {
         "version": "1.6.8"
-    },
-    "doctrine/common": {
-        "version": "3.2.0"
     },
     "doctrine/data-fixtures": {
         "version": "1.5.1"
@@ -309,9 +291,6 @@
     },
     "symfony/polyfill-php73": {
         "version": "v1.23.0"
-    },
-    "symfony/polyfill-php80": {
-        "version": "v1.23.1"
     },
     "symfony/polyfill-php81": {
         "version": "v1.23.0"
