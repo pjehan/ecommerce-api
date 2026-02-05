@@ -50,6 +50,7 @@ class MediaObject
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
+    #[Groups(['media_object:read', 'product:read', 'category:read'])]
     private ?int $id = null;
 
     #[ApiProperty(types: ['https://schema.org/contentUrl'])]
